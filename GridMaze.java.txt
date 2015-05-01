@@ -1,0 +1,143 @@
+
+
+public class GridMaze
+{
+    private int size;
+    private int[][] grid;
+    public GridMaze(int dim)
+    {
+        size=dim;
+        grid = new int[size][size];
+        for (int rows=0; rows<grid.length; rows++)
+        {
+            for (int cols=0; cols<grid[rows].length; cols++)
+                grid[rows][cols]=1;
+        }
+    }
+    public void printGrid()
+    {
+        for (int rows=0; rows<size; rows++)
+        {
+            for (int cols=0; cols<size; cols++)
+                System.out.print(grid[rows][cols]+" ");
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public void printFancy()
+    {
+        char on=9632;
+        char off=9633;
+        for (int rows=0; rows<size; rows++)
+        {
+            for (int cols=0; cols<size; cols++)
+                if(grid[rows][cols]==1)
+                    System.out.print(off + " ");
+                else System.out.print(on + " ");
+            System.out.println();
+        }
+        System.out.println();
+    }
+    public boolean validLocation(int rows, int cols, int curRows, int curCols)
+    {
+        if(rows<0 || cols<0 || rows>=size || cols>=size)
+        {
+            return false;
+        }
+        else if(grid[rows][cols]==0)
+        {
+            return false;
+        }
+        else if(rows==curRows && cols==curCols)
+        {
+            return false;
+        }
+        else if(rows-1<0)
+        {
+            if((grid[rows+1][cols]==0 && rows+1!=curRows) || (cols+1<size && grid[rows][cols+1]==0 && cols+1!=curCols) || (cols-1>=0 && grid[rows][cols-1]==0 && cols-1!=curCols))
+                return false;
+            else return true;
+        }
+        else if(cols-1<0)
+        {
+            if((grid[rows-1][cols]==0 && rows-1!=curRows) || (rows+1<size && grid[rows+1][cols]==0 && rows+1!=curRows) || (grid[rows][cols+1]==0 && cols+1!=curCols))
+                return false;
+            else return true;
+        }
+        else if(cols+1>=size)
+        {
+            if((grid[rows-1][cols]==0 && rows-1!=curRows) || (rows+1<size && grid[rows+1][cols]==0 && rows+1!=curRows) || (grid[rows][cols-1]==0 && cols-1!=curCols))
+                return false;
+            else return true;
+        }
+        else if(rows+1>=size)
+        {
+            if((grid[rows-1][cols]==0 && rows-1!=curRows) || (grid[rows][cols+1]==0 && cols+1!=curCols) || (grid[rows][cols-1]==0 && cols-1!=curCols))
+                return false;
+            else return true;
+        }
+        else if((grid[rows-1][cols]==0 && rows-1!=curRows) || (grid[rows+1][cols]==0 && rows+1!=curRows) || (grid[rows][cols+1]==0 && cols+1!=curCols) || (grid[rows][cols-1]==0 && cols-1!=curCols))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public boolean isDone(int cols)
+    {
+        if(cols==size-1)
+            return true;
+        else
+            return false;
+    }
+    public void switchOff(int rows, int cols)
+    {
+        grid[rows][cols]=0;
+    }
+    public void switchOn(int rows, int cols)
+    {
+        grid[rows][cols]=1;
+    }
+    public int getSize()
+    {
+        return size;
+    }
+    public int getValue(int rows, int cols)
+    {
+        return grid[rows][cols];
+    }
+    public void setValue(int rows, int cols, int x)
+    {
+        grid[rows][cols]=x;
+    }
+    public void undo(int rows, int cols, int degree)
+    {
+        this.switchOn(rows,cols);
+    }
+    public boolean willBlock(int rows, int cols, int curRows, int curCols, GridMaze grid)
+    {
+//         boolean check=true;
+//         if(grid.validLocation(rows,cols,curRows,curCols))
+//         {
+//             grid.switchOff(rows, cols);
+//             if(grid.isDone(cols))
+//                 return false;
+//             if(rows>0)
+//                 if(!grid.willBlock(rows-1, cols,rows,cols,grid))
+//                     check=false;
+//             if(rows<grid.getSize()-1)
+//                 if(!grid.willBlock(rows+1, cols,rows,cols,grid))
+//                     check=false;
+//             if(cols<grid.getSize()-1)
+//                 if(!grid.willBlock(rows, cols+1,rows,cols,grid))
+//                     check=false;
+//             if(cols>0)
+//                 if(!grid.willBlock(rows, cols-1,rows,cols,grid))
+//                     check=false;
+//         }
+//         return check;
+        return false;
+    }
+}
